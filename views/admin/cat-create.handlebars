@@ -1,0 +1,34 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+	<div class="card col-sm-8">
+		<br>
+		<form action="/admin/category/create" method="post">
+			<div class="form-group">
+		        <label for="name">Category Name: </label>
+		        <input type="text" name="name" class="form-control" id="name" placeholder="Enter the category name">
+		    </div>
+
+		    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+		    <br>
+		    <br>
+		</form>
+	</div>
+	<br>
+	<br>
+	<hr>
+	<br>
+	<br>
+	<table class="table">
+		<thead>
+			<th>Id</th>
+			<th>Category Name</th>
+		</thead>
+		<tbody>
+			{{#each category}}
+				<tr>
+					<td>{{_id}}</td>
+					<td>{{name}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</main>

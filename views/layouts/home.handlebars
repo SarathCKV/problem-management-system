@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/slide.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Problem Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+          <ul class="navbar-nav mr-auto">
+            {{#if loggedIn}}
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            {{/if}}
+            {{#if loggedIn}}
+
+            {{else}}
+            <li class="nav-item active">
+              <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/home/complain">Complain</a>
+            </li>
+
+          {{/if}}
+            
+            {{#if loggedIn}}
+
+            {{else}}
+            <form action="/logout" method="post"><button class="btn btn-outline-success my-2 my-sm-0" style="position: relative; left: 980px;">Log out</button></form>
+            {{/if}}
+        </div>
+    </nav>
+    <div class="container">
+    	{{{body}}}
+    </div>
+    <script>
+      var floors = {
+        Building_1: ['Ground_Floor', 'Ist_Floor', 'IInd_Floor', 'IIIrd_Floor'],
+        Building_2: ['Basement', 'I_Floor', 'II_Floor', 'III_Floor', 'IV_Floor', 'V_Floor']
+      }
+
+      var rooms = {
+        Ground_Floor: ['101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115'],
+        Ist_Floor: ['201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215'],
+        IInd_Floor: ['301', '302', '303', '304', '305', '306', '307', '308', '309', '310', '311', '312', '313', '314', '315', '316', '317', '318', '319'],
+        IIIrd_Floor: ['401', '402', '403', '404', '405', '406', '407', '408', '409'],
+        Basement: ['Workshop Lab'],
+        I_Floor: ['101', '102', '103', '104', '105', '106'],
+        II_Floor: ['201', '202', '203', '204', '205', '206', '207', '208', '209', '210'],
+        III_Floor: ['301', '302', '303', '304', '305', '306', '307', '308', '309', '310', '311', '312'],
+        IV_Floor: ['401', '402', '403', '404', '405', '406', '407', '408', '409', '410'],
+        V_Floor: ['501', '502', '503', '504', '505']
+      }
+
+      var build = document.getElementById('building');
+      var fl = document.getElementById('floor');
+      var r = document.getElementById('room');
+
+      build.addEventListener('change', function(){
+        var selected_option = floors[this.value];
+
+        while(fl.options.length > 0) {
+          fl.options.remove(0);
+        }
+
+        while(r.options.length > 0) {
+          r.options.remove(0);
+        }
+
+        r.appendChild(new Option('Select a Room'));
+
+        fl.appendChild(new Option('Select a Floor'));
+
+        Array.from(selected_option).forEach(function(el){
+          let option = new Option(el, el);
+          fl.appendChild(option);
+        });
+      });
+
+      fl = document.getElementById('floor');
+      r = document.getElementById('room');
+
+      fl.addEventListener('change', function(){
+        var selected_option = rooms[this.value];
+
+        while(r.options.length > 0) {
+          r.options.remove(0);
+        }
+
+        r.appendChild(new Option('Select a Room'));
+
+        Array.from(selected_option).forEach(function(el){
+          let option = new Option(el, el);
+          r.appendChild(option);
+        });
+      });
+
+      /* var slideIndex = 1;
+      showSlides(slideIndex);
+
+      // Next/previous controls
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+
+      // Thumbnail image controls
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+      }*/
+    </script>
+</body>
+</html>

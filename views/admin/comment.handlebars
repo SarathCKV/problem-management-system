@@ -1,0 +1,21 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <table class="table table-bordered">
+        <thead>
+            <th>Id</th>
+            <th>Posted by</th>
+            <th>Comment</th>
+            <th>Commented on</th>
+        </thead>
+        <tbody>
+            {{#each comment}}
+                <tr>
+                    <td>{{_id}}</td>
+                    <td>{{user}}</td>
+                    <td>{{body}}</td>
+                    <td>{{generateTime date 'MMMM Do YYYY h:mm:ss a'}}</td>
+                    <td><form action="/admin/comments/{{_id}}?_method=DELETE" method="POST"><button type="submit" class="btn btn-outline-danger">Delete</button></form></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</main>

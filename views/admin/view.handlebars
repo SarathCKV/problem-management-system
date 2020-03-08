@@ -1,0 +1,32 @@
+<main role="main" class="col-md-12 ml-sm-auto col-lg-11 pt-5 px-2">
+	<table class="table table-bordered">
+		<thead>
+			<th>Title</th>
+			<th>Category</th>
+			<th>Importance</th>
+			<th>Status</th>
+			<th>Location</th>
+			<th>Description</th>
+			<th>Posted by</th>
+			<th>Date of Creation</th>
+			<th>Deadline</th>
+		</thead>
+		<tbody>
+			{{#each complaint}}
+				<tr>
+					<td>{{title}}</td>
+					<td>{{category.name}}</td>
+					<td>{{importance}}</td>
+					<td>{{status}}</td>
+					<td>{{room}}, {{floor}}, {{building}}</td>
+					<td>{{description}}</td>
+					<td>{{user}}</td>
+					<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
+					<td>{{submitDate}}</td>
+	                <td><a href="/admin/edit/{{_id}}"><button class="btn btn-outline-secondary">Change Status</button></a></td>
+					<td><a href="/admin/complain/{{_id}}"><button class="btn btn-outline-info">View</button></a></td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</main>

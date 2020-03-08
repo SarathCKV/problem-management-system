@@ -1,0 +1,43 @@
+<main role="main" class="col-md-12 ml-sm-auto col-lg-11 pt-5 px-2">
+	<div class="table-responsive-sm">
+	<table class="table table-bordered">
+		<thead>
+			<th>Title</th>
+			<th>Category</th>
+			<th>Importance</th>
+			<th>Status</th>
+			<th>Location</th>
+			<th>Description</th>
+			<th>Posted By</th>
+			<th>Date of Creation</th>
+		</thead>
+		<tbody>
+			{{#each complaints}}
+			<tr>
+				<td>{{title}}</td>
+				<td>{{category.name}}</td>
+				<td>{{importance}}</td>
+				<form action="/admin/edit/{{_id}}?_method=PUT" method="post">
+					<td>
+						<div class="form-group">
+							<select name="status" id="status" class="form-control">
+								{{#select status}}
+									<option value="Not Initiated">Not Initiated</option>
+									<option value="Approved">Approved</option>
+									<option value="Completed">Completed</option>
+								{{/select}}
+							</select>
+						</div>
+					</td>
+				<td>{{room}}, {{floor}}, {{building}}</td>
+				<td>{{description}}</td>
+				<td>{{user}}</td>
+				<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
+                <td><button class="btn btn-outline-dark" type="submit">Change Status</button></td>
+                </form>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	</div>
+</main>

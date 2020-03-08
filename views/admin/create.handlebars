@@ -1,0 +1,43 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div class="card col-sm-8">
+	<br>
+	<form action="/admin/create" method="post">
+    <div class="form-group">
+        <label for="title">Title: </label>
+        <input type="text" name="title" class="form-control" id="title" placeholder="Enter the title">
+    </div>
+
+    <!--<div class="form-group">
+        <label for="categories">Categories</label>
+        <select name="categories" id="categories" class="form-control">
+            <option value="">Select a category</option>
+            {{#each categories}}
+                <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </div>-->
+
+    <div class="form-group">
+        <label for="importance">Importance: </label>
+        <select name="importance" id="importance" class="form-control">
+            <option value="">Select an Option</option>
+            <option value="not urgent">Not Urgent</option>
+            <option value="moderate">Moderate</option>
+            <option value="urgent">Urgent</option>
+        </select>
+    </div>
+
+    <!--<div class="form-check">
+        <label for="allowComments"><input type="checkbox" name="allowComments" class="custom-checkbox" id="allowComments">  Allow Comments</label>
+    </div>-->
+    
+    <div class="form-group">
+        <label for="description">Description of the problem: </label>
+        <textarea type="text" name="description" class="form-control" id="description" placeholder="Enter Description" cols="30" rows="8"></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+    <br>
+    <br>
+</form>
+</div>
+</main>
