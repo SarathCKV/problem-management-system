@@ -148,10 +148,10 @@ router.post('/login', (req, res) => {
 						}
 					});
 				}
-			} else {
-				errors.push({message: 'Incorrect Username/Password Combination'});
-				res.render('home/login', {errors: errors, userN:req.body.email});
 			}
+		}).catch(err => {
+			errors.push({message: 'Incorrect Username/Password Combination'});
+			res.render('home/login', {errors: errors, userN:req.body.email});
 		});
 	}
 });
