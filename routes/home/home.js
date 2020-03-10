@@ -72,6 +72,7 @@ router.get('/register', redirectHome, (req, res) => {
 
 router.post('/register', (req, res) => {
 	let errors = [];
+	loggedIn = 'user';
 
 	if(!req.body.firstName) {
 		errors.push({message: 'First name is required!!'});
@@ -116,7 +117,7 @@ router.post('/register', (req, res) => {
 				});
 			} else {
 				errors.push({message: 'Email already exists!!'});
-				res.render('home/register', {errors: errors, firstN: req.body.firstName, lastN: req.body.lastName, email:req.body.email});
+				res.render('home/register', {errors: errors, firstN: req.body.firstName, lastN: req.body.lastName, email:req.body.email, loggedIn: loggedIn});
 			}
 		});
 	}
@@ -124,6 +125,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
 	let errors = [];
+	loggedIn = 'user';
 	if(!req.body.email) {
 		errors.push({message: 'Email is required!!'});
 	}
@@ -146,7 +148,7 @@ router.post('/login', (req, res) => {
 							res.redirect('/admin');
 						} else {
 							errors.push({message: 'Incorrect Username/Password combination'});
-							res.render('home/login', {errors: errors, userN: req.body.email});
+							res.render('home/login', {errors: errors, userN: req.body.email, loggedIn: loggedIn});
 						}
 					});
 				} else {
