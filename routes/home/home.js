@@ -58,7 +58,6 @@ router.get('/', redirectHome, (req, res) => {
 	Complaint.find({}).lean().then(complaint => {
 		res.render('home/index', {loggedIn: loggedIn, complaint: complaint});
 	});
-	res.send('hello');
 });
 
 router.get('/login', redirectHome, (req, res) => {
