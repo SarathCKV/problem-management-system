@@ -55,9 +55,10 @@ const redirectHome = (req, res, next) => {
 router.get('/', redirectHome, (req, res) => {
 	const { userId } = req.session;
 	loggedIn = 'user';
-	Complaint.find({}).lean().then(complaint => {
-		res.render('home/index', {loggedIn: loggedIn, complaint: complaint});
-	});
+	// Complaint.find({}).lean().then(complaint => {
+	// 	res.render('home/index', {loggedIn: loggedIn, complaint: complaint});
+	// });
+	res.send('hello');
 });
 
 router.get('/login', redirectHome, (req, res) => {
