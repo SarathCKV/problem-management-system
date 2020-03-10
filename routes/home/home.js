@@ -137,6 +137,9 @@ router.post('/login', (req, res) => {
 						if(matched) {
 							req.session.userId = user.firstName;
 							res.redirect('/admin');
+						} else {
+							errors.push({message: 'Incorrect Username/Password combination'});
+							res.render('home/login', {errors: errors, userN: req.body.email});
 						}
 					});
 				} else {
@@ -150,8 +153,7 @@ router.post('/login', (req, res) => {
 				}
 			}
 		}).catch(err => {
-			errors.push({message: 'Incorrect Username/Password Combination'});
-			res.render('home/login', {errors: errors, userN:req.body.email});
+			
 		});
 	}
 });
