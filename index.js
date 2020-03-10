@@ -30,10 +30,10 @@ const {
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect('mongodb+srv://sarath:sarath@pms-sdtgp.mongodb.net/test?retryWrites=true&w=majority', (err) =>  {
-	if(err) throw err;
-	console.log('Connected to DB');
-});
+// mongoose.connect('mongodb+srv://sarath:sarath@pms-sdtgp.mongodb.net/test?retryWrites=true&w=majority', (err) =>  {
+// 	if(err) throw err;
+// 	console.log('Connected to DB');
+// });
 
 app.use(methodOverride('_method'));
 app.use(session({name: SESS_NAME, secret: 'Hello', resave: true, saveUninitialized: true, cookie: {maxAge: 60000000, sameSite: true}}));
