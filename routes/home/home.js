@@ -97,21 +97,28 @@ router.post('/register', (req, res) => {
 		loggedIn = 'user';
 		res.render('home/register', {errors: errors, loggedIn: loggedIn});
 	} else {
-		const newUser = new User({
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			email: req.body.email,
-			password: req.body.password
-		});
-		bcrypt.genSalt(10, (err, salt) => {
-			bcrypt.hash(newUser.password, salt, (err, hash) => {
-				newUser.password = hash;
-				newUser.save().then(savedUser => {
-					req.flash('success_message', 'User successfully registered!!!');
-					res.redirect('/login');
+		User.find({email: req.body.email}).then(user => {
+			if(!user) {
+				const newUser = new User({
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
+					email: req.body.email,
+					password: req.body.password
 				});
-			})
-		})
+				bcrypt.genSalt(10, (err, salt) => {
+					bcrypt.hash(newUser.password, salt, (err, hash) => {
+						newUser.password = hash;
+						newUser.save().then(savedUser => {
+							req.flash('success_message', 'User successfully registered!!!');
+							res.redirect('/login');
+						});
+					})
+				});
+			} else {
+				errors.push({message: 'Email already exists!!'});
+				res.render('home/register', {errors: errors, firstN: req.body.firstName, lastN: req.body.lastName, email:req.body.email});
+			}
+		});
 	}
 });
 
