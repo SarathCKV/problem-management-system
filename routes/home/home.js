@@ -99,7 +99,7 @@ router.post('/register', (req, res) => {
 		res.render('home/register', {errors: errors, loggedIn: loggedIn});
 	} else {
 		User.find({email: req.body.email}).then(user => {
-			if(!user) {
+			if(user) {
 				const newUser = new User({
 					firstName: req.body.firstName,
 					lastName: req.body.lastName,
@@ -116,8 +116,21 @@ router.post('/register', (req, res) => {
 					})
 				});
 			} else {
-				errors.push({message: 'Email already exists!!'});
-				res.render('home/register', {errors: errors, firstN: req.body.firstName, lastN: req.body.lastName, email:req.body.email, loggedIn: loggedIn});
+				const newUser = new User({
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
+					email: req.body.email,
+					password: req.body.password
+				});
+				bcrypt.genSalt(10, (err, salt) => {
+					bcrypt.hash(newUser.password, salt, (err, hash) => {
+						newUser.password = hash;
+						newUser.save().then(savedUser => {
+							req.flash('success_message', 'User successfully registered!!!');
+							res.redirect('/login');
+						});
+					})
+				});
 			}
 		});
 	}
