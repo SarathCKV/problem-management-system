@@ -31,7 +31,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 //mongodb+srv://Sarath:123@cluster0-sjzxx.mongodb.net/test?retryWrites=true&w=majority
 //mongodb://localhost:27017/pms
-mongoose.connect('mongodb+srv://Sarath:123@cluster0-sjzxx.mongodb.net/test?retryWrites=true&w=majority', (err) =>  {
+mongoose.connect('mongodb://localhost:27017/probms', (err) =>  {
 	if(err) throw err;
 	console.log('Connected to DB');
 });

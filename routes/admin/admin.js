@@ -5,6 +5,8 @@ const Category = require('../../models/Category');
 const User = require('../../models/User');
 const Comment = require('../../models/Comment');
 const flash = require('connect-flash');
+const pdf = require('handlebars-pdf');
+const num = Math.random();
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -154,6 +156,185 @@ router.delete('/comments/:id', (req, res) => {
 		Complaint.findOneAndUpdate({comments: req.params.id}, {$pull: {comments: req.params.id}}, (err, data) => {
 			if(err) throw err;
 			res.redirect('/admin/comments/view');
+		});
+	});
+});
+
+router.get('/generate', (req, res) => {
+	Category.find({}).lean().then(categories => {
+
+		res.render('admin/generate', {categories: categories});
+	});
+});
+
+router.get('/generate/complete', (req, res) => {
+	Complaint.find({status: 'Completed'}).populate('category').lean().then(tran => {
+        // console.log(tran)
+        let document = {
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			'<h1>Complaints</h1>'+
+			'<table>' +
+			'<thead>' +
+			'<th>Title</th>' +
+				'<th>Category</th>' +
+				'<th>Importance</th>' +
+				'<th>Date</th>' +
+				'<th>Status</th>' +
+				'<th>Location</th>' +
+				'<th>Posted by</th>' +
+			'</thead>' +
+			'<tbody>' +
+			'{{#each tran}}'+
+			'<tr>' +
+			'<td>{{title}}</td>' +
+			'<td>{{category.name}}</td>' +
+			'<td>{{importance}}</td>' +
+			'<th>{{date}}</th>' +
+			'<td>{{status}}</td>' +
+			'<td>{{room}}, {{floor}}, {{building}}</td>' +
+			'<td>{{user}}</td>' +
+				'</tr>' +
+			'{{/each}}',
+			context: {
+				tran: tran
+			},
+			path: "../../public/uploads/completedComplaints.pdf"
+		}
+         
+        pdf.create(document).then(result => {
+                console.log(result.filename)
+                res.download(result.filename);
+            }).catch(error => {
+                console.error(error)
+		});
+	});
+});
+
+router.get('/generate/app', (req, res) => {
+	Complaint.find({status: 'Approved'}).populate('category').lean().then(tran => {
+        // console.log(tran)
+        let document = {
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			'<h1>Complaints</h1>'+
+			'<table>' +
+			'<thead>' +
+			'<th>Title</th>' +
+				'<th>Category</th>' +
+				'<th>Importance</th>' +
+				'<th>Date</th>' +
+				'<th>Status</th>' +
+				'<th>Location</th>' +
+				'<th>Posted by</th>' +
+			'</thead>' +
+			'<tbody>' +
+			'{{#each tran}}'+
+			'<tr>' +
+			'<td>{{title}}</td>' +
+			'<td>{{category.name}}</td>' +
+			'<td>{{importance}}</td>' +
+			'<th>{{date}}</th>' +
+			'<td>{{status}}</td>' +
+			'<td>{{room}}, {{floor}}, {{building}}</td>' +
+			'<td>{{user}}</td>' +
+				'</tr>' +
+			'{{/each}}',
+			context: {
+				tran: tran
+			},
+			path: "../../public/uploads/approvedComplaints.pdf"
+		}
+         
+        pdf.create(document).then(result => {
+                console.log(result.filename)
+                res.download(result.filename);
+            }).catch(error => {
+                console.error(error)
+		});
+	});
+});
+
+router.get('/generate/ncomplete', (req, res) => {
+	Complaint.find({status: 'Not Initiated'}).populate('category').lean().then(tran => {
+        // console.log(tran)
+        let document = {
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			'<h1>Complaints</h1>'+
+			'<table>' +
+			'<thead>' +
+			'<th>Title</th>' +
+				'<th>Category</th>' +
+				'<th>Importance</th>' +
+				'<th>Date</th>' +
+				'<th>Status</th>' +
+				'<th>Location</th>' +
+				'<th>Posted by</th>' +
+			'</thead>' +
+			'<tbody>' +
+			'{{#each tran}}'+
+			'<tr>' +
+			'<td>{{title}}</td>' +
+			'<td>{{category.name}}</td>' +
+			'<td>{{importance}}</td>' +
+			'<th>{{date}}</th>' +
+			'<td>{{status}}</td>' +
+			'<td>{{room}}, {{floor}}, {{building}}</td>' +
+			'<td>{{user}}</td>' +
+				'</tr>' +
+			'{{/each}}',
+			context: {
+				tran: tran
+			},
+			path: "../../public/uploads/notInitComplaints.pdf"
+		}
+         
+        pdf.create(document).then(result => {
+                console.log(result.filename)
+                res.download(result.filename);
+            }).catch(error => {
+                console.error(error)
+		});
+	});
+});
+
+router.post('/generate/category', (req, res) => {
+	Complaint.find({category: req.body.categories}).populate('category').lean().then(tran => {
+		// console.log(tran)
+		let document = {
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			'<h1>Complaints</h1>'+
+			'<table>' +
+			'<thead>' +
+			'<th>Title</th>' +
+				'<th>Category</th>' +
+				'<th>Importance</th>' +
+				'<th>Date</th>' +
+				'<th>Status</th>' +
+				'<th>Location</th>' +
+				'<th>Posted by</th>' +
+			'</thead>' +
+			'<tbody>' +
+			'{{#each tran}}'+
+			'<tr>' +
+			'<td>{{title}}</td>' +
+			'<td>{{category.name}}</td>' +
+			'<td>{{importance}}</td>' +
+			'<th>{{date}}</th>' +
+			'<td>{{status}}</td>' +
+			'<td>{{room}}, {{floor}}, {{building}}</td>' +
+			'<td>{{user}}</td>' +
+				'</tr>' +
+			'{{/each}}',
+			context: {
+				tran: tran
+			},
+			path: "../../public/uploads/categoryBased-"+ num + ".pdf"
+		}
+			
+		pdf.create(document).then(result => {
+				console.log(result.filename)
+				res.download(result.filename);
+			}).catch(error => {
+				console.error(error)
 		});
 	});
 });
