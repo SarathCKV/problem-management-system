@@ -200,12 +200,14 @@ router.get('/generate/complete', (req, res) => {
 			context: {
 				tran: tran
 			},
-			path: "../../public/uploads/completedComplaints.pdf"
+			path: "./completedComplaints.pdf"
 		}
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                res.download(result.filename);
+                var files = fs.createReadStream('completedComplaints.pdf');
+				res.writeHead(200, {'Content-disposition': 'attachment; filename=completedComplaints.pdf'}); //here you can add more headers
+				files.pipe(res);
             }).catch(error => {
                 console.error(error)
 		});
@@ -243,12 +245,14 @@ router.get('/generate/app', (req, res) => {
 			context: {
 				tran: tran
 			},
-			path: "../../public/uploads/approvedComplaints.pdf"
+			path: "./approvedComplaints.pdf"
 		}
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                res.download(result.filename);
+                var files = fs.createReadStream('approvedComplaints.pdf');
+				res.writeHead(200, {'Content-disposition': 'attachment; filename=approvedComplaints.pdf'}); //here you can add more headers
+				files.pipe(res);
             }).catch(error => {
                 console.error(error)
 		});
@@ -286,12 +290,14 @@ router.get('/generate/ncomplete', (req, res) => {
 			context: {
 				tran: tran
 			},
-			path: "../../public/uploads/notInitComplaints.pdf"
+			path: "./notInitComplaints.pdf"
 		}
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                res.download(result.filename);
+                var files = fs.createReadStream('notInitComplaints.pdf');
+				res.writeHead(200, {'Content-disposition': 'attachment; filename=notInitComplaints.pdf'}); //here you can add more headers
+				files.pipe(res);
             }).catch(error => {
                 console.error(error)
 		});
