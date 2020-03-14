@@ -9,6 +9,9 @@ const pdf = require('handlebars-pdf');
 const num = Math.random();
 const fs = require('fs');
 const { generateTime } = require('../../helpers/handlebars-helpers');
+const hbs = require('handlebars');
+const moment = require('moment');
+const path = require('path');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -173,7 +176,7 @@ router.get('/generate/complete', (req, res) => {
 	Complaint.find({status: 'Completed'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
@@ -205,9 +208,10 @@ router.get('/generate/complete', (req, res) => {
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                var files = fs.createReadStream('completedComplaints.pdf');
-				res.writeHead(200, {'Content-disposition': 'attachment; filename=completedComplaints.pdf'}); //here you can add more headers
-				files.pipe(res);
+                // var files = fs.createReadStream('completedComplaints.pdf');
+				// res.writeHead(200, {'Content-disposition': 'attachment; filename=completedComplaints.pdf'}); //here you can add more headers
+				// files.pipe(res);
+				res.download(result.filename);
             }).catch(error => {
                 console.error(error)
 		});
@@ -218,7 +222,7 @@ router.get('/generate/app', (req, res) => {
 	Complaint.find({status: 'Approved'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
@@ -263,7 +267,7 @@ router.get('/generate/ncomplete', (req, res) => {
 	Complaint.find({status: 'Not Initiated'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
@@ -326,7 +330,7 @@ router.post('/generate/category', (req, res) => {
 			'<td>{{title}}</td>' +
 			'<td>{{category.name}}</td>' +
 			'<td>{{importance}}</td>' +
-			'<th>{{date}}</th>' +
+			'<th>{{generateTime date \'MMMM Do\'}}</th>' +
 			'<td>{{status}}</td>' +
 			'<td>{{room}}, {{floor}}, {{building}}</td>' +
 			'<td>{{user}}</td>' +
