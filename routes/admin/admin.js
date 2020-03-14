@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const pdf = require('handlebars-pdf');
 const num = Math.random();
 const fs = require('fs');
+const { generateTime } = require('../../helpers/handlebars-helpers');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -301,7 +302,7 @@ router.post('/generate/category', (req, res) => {
 	Complaint.find({category: req.body.categories}).populate('category').lean().then(tran => {
 		// console.log(tran)
 		let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:15px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
