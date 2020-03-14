@@ -7,6 +7,7 @@ const Comment = require('../../models/Comment');
 const flash = require('connect-flash');
 const pdf = require('handlebars-pdf');
 const num = Math.random();
+const fs = require('fs');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -327,12 +328,14 @@ router.post('/generate/category', (req, res) => {
 			context: {
 				tran: tran
 			},
-			path: "../../PMS/public/uploads/categoryBased-"+ num + ".pdf"
+			path: "./categoryBased-"+ num + ".pdf"
 		}
 			
 		pdf.create(document).then(result => {
 				console.log(result.filename)
-				res.download(result.filename);
+				var files = fs.createReadStream('categoryBased-' + num + ".pdf");
+				res.writeHead(200, {'Content-disposition': 'attachment; filename=categoryBased-'+ num + '.pdf'}); //here you can add more headers
+				files.pipe(res);
 			}).catch(error => {
 				console.error(error)
 		});
