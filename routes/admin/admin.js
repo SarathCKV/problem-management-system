@@ -327,7 +327,7 @@ router.post('/generate/category', (req, res) => {
 			context: {
 				tran: tran
 			},
-			path: "../../public/uploads/categoryBased-"+ num + ".pdf"
+			path: "../../PMS/public/uploads/categoryBased-"+ num + ".pdf"
 		}
 			
 		pdf.create(document).then(result => {
