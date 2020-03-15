@@ -223,7 +223,7 @@ router.get('/generate/app', (req, res) => {
 	Complaint.find({status: 'Approved'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px; font-size:10px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
@@ -269,7 +269,7 @@ router.get('/generate/ncomplete', (req, res) => {
 	Complaint.find({status: 'Not Initiated'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px; font-size:10px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
@@ -315,7 +315,7 @@ router.post('/generate/category', (req, res) => {
 	Complaint.find({category: req.body.categories}).populate('category').lean().then(tran => {
 		// console.log(tran)
 		let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
+			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px; font-size:10px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
