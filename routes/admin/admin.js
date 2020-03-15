@@ -255,9 +255,10 @@ router.get('/generate/app', (req, res) => {
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                var files = fs.createReadStream('approvedComplaints.pdf');
-				res.writeHead(200, {'Content-disposition': 'attachment; filename=approvedComplaints.pdf'}); //here you can add more headers
-				files.pipe(res);
+                // var files = fs.createReadStream('approvedComplaints.pdf');
+				// res.writeHead(200, {'Content-disposition': 'attachment; filename=approvedComplaints.pdf'}); //here you can add more headers
+				// files.pipe(res);
+				res.download(result.filename);
             }).catch(error => {
                 console.error(error)
 		});
@@ -300,9 +301,10 @@ router.get('/generate/ncomplete', (req, res) => {
          
         pdf.create(document).then(result => {
                 console.log(result.filename)
-                var files = fs.createReadStream('notInitComplaints.pdf');
-				res.writeHead(200, {'Content-disposition': 'attachment; filename=notInitComplaints.pdf'}); //here you can add more headers
-				files.pipe(res);
+                // var files = fs.createReadStream('notInitComplaints.pdf');
+				// res.writeHead(200, {'Content-disposition': 'attachment; filename=notInitComplaints.pdf'}); //here you can add more headers
+				// files.pipe(res);
+				res.download(result.filename);
             }).catch(error => {
                 console.error(error)
 		});
@@ -331,7 +333,7 @@ router.post('/generate/category', (req, res) => {
 			'<td>{{title}}</td>' +
 			'<td>{{category.name}}</td>' +
 			'<td>{{importance}}</td>' +
-			'<th>{{generateTime date \'MMMM Do\'}}</th>' +
+			'<th>{{date}}</th>' +
 			'<td>{{status}}</td>' +
 			'<td>{{room}}, {{floor}}, {{building}}</td>' +
 			'<td>{{user}}</td>' +
@@ -345,9 +347,10 @@ router.post('/generate/category', (req, res) => {
 			
 		pdf.create(document).then(result => {
 				console.log(result.filename)
-				var files = fs.createReadStream('categoryBased-' + num + ".pdf");
-				res.writeHead(200, {'Content-disposition': 'attachment; filename=categoryBased-'+ num + '.pdf'}); //here you can add more headers
-				files.pipe(res);
+				// var files = fs.createReadStream('categoryBased-' + num + ".pdf");
+				// res.writeHead(200, {'Content-disposition': 'attachment; filename=categoryBased-'+ num + '.pdf'}); //here you can add more headers
+				// files.pipe(res);
+				res.download(result.filename);
 			}).catch(error => {
 				console.error(error)
 		});
