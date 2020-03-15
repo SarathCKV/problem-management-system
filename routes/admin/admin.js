@@ -176,7 +176,8 @@ router.get('/generate/complete', (req, res) => {
 	Complaint.find({status: 'Completed'}).populate('category').lean().then(tran => {
         // console.log(tran)
         let document = {
-			template: '<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
+			template: '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">' +
+			'<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding:5px;}</style>' +
 			'<h1>Complaints</h1>'+
 			'<table>' +
 			'<thead>' +
