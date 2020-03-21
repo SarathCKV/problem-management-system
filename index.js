@@ -11,7 +11,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
-const {select, generateTime} = require('./helpers/handlebars-helpers');
+const {select, generateTime, ifEquality} = require('./helpers/handlebars-helpers');
 const {isEmpty} = require('./helpers/upload-helper');
 const methodOverride = require('method-override');
 const multer = require('multer');
@@ -20,7 +20,8 @@ const User = require('./models/User.js');
 const Category = require('./models/Category');
 const upload = require('express-fileupload');
 const {uploadDir} = require('./helpers/upload-helper');
-
+const Handlebars = require('handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 
 const {
@@ -30,7 +31,7 @@ const {
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 //mongodb+srv://Sarath:123@cluster0-sjzxx.mongodb.net/test?retryWrites=true&w=majority
-//mongodb://localhost:27017/pms
+//mongodb://localhost:27017/probms
 mongoose.connect('mongodb+srv://Sarath:123@cluster0-sjzxx.mongodb.net/test?retryWrites=true&w=majority', (err) =>  {
 	if(err) throw err;
 	console.log('Connected to DB');
@@ -54,7 +55,7 @@ app.use('/admin', admin);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.engine('handlebars', ehbs({defaultLayout: 'home', helpers: {select: select, generateTime: generateTime}}));
+app.engine('handlebars', ehbs({defaultLayout: 'home', handlebars: allowInsecurePrototypeAccess(Handlebars), helpers: {select: select, generateTime: generateTime, ifEquality: ifEquality}}));
 app.set('view engine', 'handlebars');
 
 

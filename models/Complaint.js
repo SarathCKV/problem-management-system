@@ -44,6 +44,9 @@ const ComplaintSchema = new Schema({
 	changeStatus: {
 		type: Boolean
 	},
+	searchParam: {
+		type: String
+	},
 	comments: [{
 		type: mongoose.Types.ObjectId,
 		ref: 'comments'

@@ -12,6 +12,8 @@ const { generateTime } = require('../../helpers/handlebars-helpers');
 const hbs = require('handlebars');
 const moment = require('moment');
 const path = require('path');
+//const ObjectID = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -76,16 +78,22 @@ router.post('/create', (req, res) => {
 
 router.get('/edit/:id', redirectLogin, protectAdmin, (req, res) => {
 	Complaint.findOne({_id: req.params.id}).then(comp => {
-		comp.changeStatus = true;
-	});
-	Complaint.find({}).lean().populate('category').then(complaints => {
-		res.render('admin/edit', {complaints: complaints});
-	});
+		console.log(comp._id);
+		comp.searchParam = comp._id;
+		// console.log(comp);
+		comp.save().then(compl => {
+			Complaint.find({}).lean().populate('category').then(complaints => {
+				// console.log(complaints);
+				res.render('admin/edit', {complaints: complaints, comp: comp});
+			});
+		});
+	})
 });
 
 router.put('/edit/:id', (req, res) => {
 	Complaint.findOne({_id: req.params.id}).then(comps => {
 		comps.status = req.body.status;
+		comps.searchParam = '';
 		comps.save().then(savedComp => {
 			res.redirect('/admin/view');
 		}).catch(error => {

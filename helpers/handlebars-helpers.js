@@ -7,5 +7,13 @@ module.exports = {
 
     generateTime: function (date, format) {
         return moment(date).format(format);
+    },
+
+    ifEquality: function(id1, id2, opts) {
+        if(id1 == id2) {
+            return opts.fn(this);
+        } else {
+            return opts.inverse(this);
+        }
     }
 };
