@@ -557,40 +557,6 @@ router.get('/generate/xlsx/all', (req, res) => {
 	});
 });
 
-router.get('/email/:id', (req, res) => {
-	let emailSomeone = 'comment';
-	Complaint.findOne({_id: req.params.id}).lean().populate('category').then(comp => {
-		res.render('admin/email', {comp: comp});
-	})
-});
-
-router.post('/email', (req, res) => {
-	var transporter = nodemailer.createTransport({
-		service: 'gmail',
-		auth: {
-			user: 'icygorila@gmail.com',
-			pass: 'patlatss12345'
-		}
-	});
-
-	var mailOptions = {
-		from: 'icygorila@gmail.com',
-		to: req.body.email,
-		subject: req.body.subject,
-		text: req.body.description
-	};
-
-	transporter.sendMail(mailOptions, (err, info) => {
-		
-		if(err) {
-			console.log(err);
-		}
-		else {
-			res.redirect('/admin/view');
-			console.log('Email sent ' + info.response);
-		}
-	});
-});
 
 router.post('/logout', (req, res) => {
 	req.session.userId = '';
