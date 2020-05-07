@@ -78,13 +78,13 @@ app.post('/create', (req, res) => {
 		errors.push({message: 'Please choose a category'});
 	}
 
-    if(!isEmpty(req.files)) {
-        let file = req.files.file;
-        filename = Date.now() + '-' + file.name;
-        file.mv(uploadDir + filename, (err) => {
-            if(err) throw err;
-        });
-	}
+    // if(!isEmpty(req.files)) {
+    //     let file = req.files.file;
+    //     filename = Date.now() + '-' + file.name;
+    //     file.mv(uploadDir + filename, (err) => {
+    //         if(err) throw err;
+    //     });
+	// }
 
 	if(!(req.body.building || req.body.floor || req.body.room)) {
 		errors.push({message: 'Please choose a location'});
@@ -103,7 +103,7 @@ app.post('/create', (req, res) => {
 			importance: req.body.importance,
 			description: req.body.description,
 			category: req.body.categories,
-			file: filename,
+			// file: filename,
 			submitDate: generateTime(req.body.submitDate, 'MMMM Do YYYY'),
 			building: req.body.building,
 			floor: req.body.floor,

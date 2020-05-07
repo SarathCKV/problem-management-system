@@ -1,15 +1,17 @@
-<h1>Home</h1>
-
+<div style="height: 100%; width: 100%; background-image: url(/uploads/person-in-blue-denim-jean-lying-on-brown-grass-field-looking-798721.jpg); background-size: cover; background-repeat: no-repeat; background-position: center; background-attachment: fixed;">
+<div class="container">
+<h1 class="text-center">Problem Management System</h1>
+<br><br>
 <div class="col-md-8">
 
     {{#each complaint}}
         <!-- Blog Post -->
         <div class="card mb-4">
-            {{#if file}}
+            {{!-- {{#if file}}
             <img class="card-img-top" src="/uploads/{{file}}" alt="Card image cap">
             {{else}}
             <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-            {{/if}}
+            {{/if}} --}}
             <div class="card-body">
                 <h2 class="card-title">{{title}}</h2>
                 <p class="card-text">{{description}}</p>
@@ -23,13 +25,15 @@
     {{/each}}
 
     <!-- Pagination -->
-    <ul class="pagination justify-content-center mb-4">
+    {{!-- <ul class="pagination justify-content-center mb-4">
         <li class="page-item">
             <a class="page-link" href="#">&larr; Older</a>
         </li>
         <li class="page-item disabled">
             <a class="page-link" href="#">Newer &rarr;</a>
         </li>
-    </ul>
-
+    </ul> --}}
+    <br><br>
+</div>
+</div>
 </div>

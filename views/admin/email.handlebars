@@ -1,0 +1,49 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div class="card col-sm-8">
+	<br>
+	<form action="/admin/email" method="post">
+    <div class="form-group">
+        <label for="email">Email Address: </label>
+        <input type="email" name="email" class="form-control" id="email" placeholder="Enter the email address">
+    </div>
+    <div class="form-group">
+        <label for="title">Title of the problem: </label>
+        <input type="text" name="title" class="form-control" value="{{comp.title}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="category">Category of the problem: </label>
+        <input type="text" name="category" class="form-control" value="{{comp.category.name}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="Importance">Importance of the problem: </label>
+        <input type="text" name="importance" class="form-control" value="{{comp.importance}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="location">Location of the problem: </label>
+        <input type="text" name="location" class="form-control" value="{{comp.building}}, {{comp.floor}}, {{comp.room}}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="subject">Subject: </label>
+        <input type="text" name="subject" class="form-control" id="subject" placeholder="Enter the subject of the email">
+    </div>
+
+    {{!-- <div class="form-group">
+        <label for="importance">Importance: </label>
+        <select name="importance" id="importance" class="form-control">
+            <option value="">Select an Option</option>
+            <option value="not urgent">Not Urgent</option>
+            <option value="moderate">Moderate</option>
+            <option value="urgent">Urgent</option>
+        </select>
+    </div> --}}
+
+    <div class="form-group">
+        <label for="description">Description of the problem: </label>
+        <textarea type="text" name="description" class="form-control" id="description" placeholder="Enter Description" cols="30" rows="8"></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Send Email</button>
+    <br>
+    <br>
+</form>
+</div>
+</main>

@@ -16,6 +16,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const json2csv = require('json2csv');
 const { Parser } = require('json2csv');
+const nodemailer = require('nodemailer');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -553,6 +554,41 @@ router.get('/generate/xlsx/all', (req, res) => {
 			console.log('Saved!!');
 			res.download(filename);
 		});
+	});
+});
+
+router.get('/email/:id', (req, res) => {
+	let emailSomeone = 'comment';
+	Complaint.findOne({_id: req.params.id}).lean().populate('category').then(comp => {
+		res.render('admin/email', {comp: comp});
+	})
+});
+
+router.post('/email', (req, res) => {
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'icygorila@gmail.com',
+			pass: 'patlatss12345'
+		}
+	});
+
+	var mailOptions = {
+		from: 'icygorila@gmail.com',
+		to: req.body.email,
+		subject: req.body.subject,
+		text: req.body.description
+	};
+
+	transporter.sendMail(mailOptions, (err, info) => {
+		
+		if(err) {
+			console.log(err);
+		}
+		else {
+			res.redirect('/admin/view');
+			console.log('Email sent ' + info.response);
+		}
 	});
 });
 

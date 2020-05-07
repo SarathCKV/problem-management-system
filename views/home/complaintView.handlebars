@@ -1,5 +1,5 @@
+<div class="container">
 <div class="row">
-
         <!-- Post Content Column -->
         <div class="col-lg-8">
 
@@ -11,33 +11,25 @@
             by
             <a href="#">{{complaint.user}}</a>
           </p>
-
-          <hr>
-
           <!-- Date/Time -->
-          <p>Posted on {{generateTime complaint.date 'MMMM Do YYYY'}} at {{generateTime complaint.date 'h:mm:ss a'}}</p>
-
-          <hr>
+          <p style="font-size: small;">Posted on {{generateTime complaint.date 'MMMM Do YYYY'}} at {{generateTime complaint.date 'h:mm:ss a'}}</p>
 
           <!-- Preview Image -->
-        {{#if complaint.file}}
+        {{!-- {{#if complaint.file}}
             <img class="img-fluid rounded" src="/uploads/{{complaint.file}}" alt="">
         {{else}}
           <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-        {{/if}}
+        {{/if}} --}}
 
           <hr>
 
           <!-- Post Content -->
-          
+          <br><br><br>
           <blockquote class="blockquote">
             <p class="mb-0">{{complaint.description}}</p>
           </blockquote>
           <hr>
 
-        <h4>Please login to comment on this complaint</h4>
-        <br>
-        <hr>
 
           <!-- Comments Form -->
           {{!-- <div class="card my-4">
@@ -91,4 +83,6 @@
             </div>
           </div> --}}
 
+        </div>
+        </div>
         </div>
