@@ -2,18 +2,12 @@
 {{#if success_message}}
     <div class="alert alert-success" role="alert">
         {{success_message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 {{/if}}
 {{#if errors}}
     {{#each errors}}
         <div class="alert alert-danger" role="alert">
             {{message}}
-            <a href="/home/complain"><button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button></a>
         </div>
     {{/each}}
 {{/if}}

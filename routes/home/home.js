@@ -183,10 +183,14 @@ router.post('/login', (req, res) => {
 
 router.get('/home', redirectLogin, protectHome, (req, res) => {
 	loggedIn = '';
-	Complaint.find({user: req.session.userId, $or: [{status: 'Approved'}, {status: 'Not Initiated'}]}).lean().populate('category').then(complaint => {
-		Complaint.find({user: req.session.userId, status: 'Completed'}).lean().populate('category').then(completedComplaint => {
-			res.render('home/dash', {loggedIn: loggedIn, complaint: complaint, completedComplaint: completedComplaint});
-		});
+	// Complaint.find({user: req.session.userId, $or: [{status: 'Approved'}, {status: 'Not Initiated'}]}).lean().populate('category').then(complaint => {
+	// 	Complaint.find({user: req.session.userId, status: 'Completed'}).lean().populate('category').then(completedComplaint => {
+	// 		res.render('home/dash', {loggedIn: loggedIn, complaint: complaint, completedComplaint: completedComplaint});
+	// 	});
+	// });
+
+	Complaint.find({$and: [{user: req.session.userId, viewable: 'Yes'}]}).lean().populate('category').then(complaint => {
+		res.render('home/dash', {loggedIn: loggedIn, complaint: complaint});
 	});
 });
 
@@ -203,18 +207,20 @@ router.get('/home/complain', redirectLogin, protectHome, (req, res) => {
 
 router.delete('/home/:id', (req, res) => {
 	Complaint.findOne({_id: req.params.id}).then(comp => {
-		fs.unlink(uploadDir + comp.file, (err) => {
-			if(!comp.comments.length < 1) {
-				comp.comments.forEach(comment => {
-					Comment.findByIdAndRemove(comment).then(com => {
+		// fs.unlink(uploadDir + comp.file, (err) => {
+		// 	if(!comp.comments.length < 1) {
+		// 		comp.comments.forEach(comment => {
+		// 			Comment.findByIdAndRemove(comment).then(com => {
 
-					})
-				});
-			}
-			comp.remove();
+		// 			})
+		// 		});
+		// 	}
+		// 	comp.remove();
+			comp.viewable = 'No';
+			comp.save();
 			req.flash('success_message', 'Complaint successfully closed...');
 			res.redirect('/home');
-		})
+		// })
 	});
 });
 

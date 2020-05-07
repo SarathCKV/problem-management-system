@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+const moment = require('moment');
 
 const ComplaintSchema = new Schema({
 	category: {
@@ -46,6 +47,10 @@ const ComplaintSchema = new Schema({
 	},
 	searchParam: {
 		type: String
+	},
+	viewable: {
+		type: String,
+		default: 'Yes'
 	},
 	comments: [{
 		type: mongoose.Types.ObjectId,

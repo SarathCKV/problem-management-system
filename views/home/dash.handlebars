@@ -1,9 +1,6 @@
 {{#if success_message}}
     <div class="alert alert-success" role="alert">
         {{success_message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 {{/if}}
 <h1>User Home</h1>
@@ -37,6 +34,7 @@
 					<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
 					<td>{{submitDate}}</td>
 					<td><a href="/home/complain/{{_id}}"><button class="btn btn-outline-info">View</button></a></td>
+					{{#ifEquality status 'Completed'}}<td><form action="/home/{{_id}}?_method=DELETE" method="post"><button class="btn btn-outline-primary">Satisfied</button></form></td>{{/ifEquality}}
 				</tr>
 			{{/each}}
 		</tbody>
@@ -50,46 +48,3 @@
 <br>
 
 
-<hr>
-<hr>
-
-<br>
-
-<h3>Completed complaints</h3>
-<p>Please close the complaints if you are satisfied with them....</p>
-
-
-{{#if completedComplaint}}
-	<table class="table table-bordered">
-		<thead>
-			<th>Title</th>
-				<th>Category</th>
-				<th>Importance</th>
-				<th>Status</th>
-				<th>Location</th>
-				{{!-- <th>Description</th> --}}
-				<th>Posted by</th>
-				<th>Date of Creation</th>
-				<th>Date of Submission</th>
-		</thead>
-		<tbody>
-				{{#each completedComplaint}}
-					<tr>
-						<td>{{title}}</td>
-						<td>{{category.name}}</td>
-						<td>{{importance}}</td>
-						<td>{{status}}</td>
-						<td>{{room}}, {{floor}}, {{building}}</td>
-						{{!-- <td>{{description}}</td> --}}
-						<td>{{user}}</td>
-						<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
-						<td>{{submitDate}}</td>
-						<td><a href="/home/complain/{{_id}}"><button class="btn btn-outline-info">View</button></a></td>
-						<td><form action="/home/{{_id}}?_method=DELETE" method="post"><button class="btn btn-outline-danger">Close Complaint</button></form></td>
-					</tr>
-				{{/each}}
-			</tbody>
-	</table>
-{{else}}
-	<h4>No Complaints posted by you were completed. We're on it and will look into your problem.</h4
-{{/if}}

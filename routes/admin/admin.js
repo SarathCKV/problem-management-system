@@ -14,6 +14,8 @@ const moment = require('moment');
 const path = require('path');
 //const ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
+const json2csv = require('json2csv');
+const { Parser } = require('json2csv');
 
 router.use(flash());
 router.use((req, res, next) => {
@@ -174,9 +176,10 @@ router.delete('/comments/:id', (req, res) => {
 });
 
 router.get('/generate', (req, res) => {
+	let generateReport = "generate";
 	Category.find({}).lean().then(categories => {
 
-		res.render('admin/generate', {categories: categories});
+		res.render('admin/generate', {categories: categories, generateReport: generateReport});
 	});
 });
 
@@ -361,6 +364,194 @@ router.post('/generate/category', (req, res) => {
 				res.download(result.filename);
 			}).catch(error => {
 				console.error(error)
+		});
+	});
+});
+
+router.get('/generate/xlsx/complete', (req, res) => {
+	Complaint.find({status: 'Completed'}).populate('category').then(cat => {
+		const fields = [
+			{
+				label: 'Id',
+				value: 'id'
+			},
+			{
+				label: 'Title',
+				value: 'title'
+			},
+			{
+				label: 'Date of Creation',
+				value: 'date'
+			},
+			{
+				label: 'Posted by',
+				value: 'user'
+			},
+			{
+				label: 'Deadline',
+				value: 'submitDate'
+			},
+			{
+				label: 'Category',
+				value: 'category.name'
+			},
+			{
+				label: 'Importance',
+				value: 'importance'
+			},
+			{
+				label: 'Status',
+				value: 'status'
+			}
+		];
+		const json2CsvParser = new Parser({fields});
+		const csv = json2CsvParser.parse(cat);
+		const filename = 'completedComplaints' + Date.now() + '.csv';
+		fs.writeFile(filename, csv, (err) => {
+			if(err) throw err;
+			console.log('Saved!!');
+			res.download(filename);
+		});
+	});
+});
+
+router.get('/generate/xlsx/approved', (req, res) => {
+	Complaint.find({status: 'Approved'}).populate('category').then(cat => {
+		const fields = [
+			{
+				label: 'Id',
+				value: 'id'
+			},
+			{
+				label: 'Title',
+				value: 'title'
+			},
+			{
+				label: 'Date of Creation',
+				value: 'date'
+			},
+			{
+				label: 'Posted by',
+				value: 'user'
+			},
+			{
+				label: 'Deadline',
+				value: 'submitDate'
+			},
+			{
+				label: 'Category',
+				value: 'category.name'
+			},
+			{
+				label: 'Importance',
+				value: 'importance'
+			},
+			{
+				label: 'Status',
+				value: 'status'
+			}
+		];
+		const json2CsvParser = new Parser({fields});
+		const csv = json2CsvParser.parse(cat);
+		const filename = 'approvedComplaints' + Date.now() + '.csv';
+		fs.writeFile(filename, csv, (err) => {
+			if(err) throw err;
+			console.log('Saved!!');
+			res.download(filename);
+		});
+	});
+});
+
+router.get('/generate/xlsx/notinit', (req, res) => {
+	Complaint.find({status: 'Not Initiated'}).populate('category').then(cat => {
+		const fields = [
+			{
+				label: 'Id',
+				value: 'id'
+			},
+			{
+				label: 'Title',
+				value: 'title'
+			},
+			{
+				label: 'Date of Creation',
+				value: 'date'
+			},
+			{
+				label: 'Posted by',
+				value: 'user'
+			},
+			{
+				label: 'Deadline',
+				value: 'submitDate'
+			},
+			{
+				label: 'Category',
+				value: 'category.name'
+			},
+			{
+				label: 'Importance',
+				value: 'importance'
+			},
+			{
+				label: 'Status',
+				value: 'status'
+			}
+		];
+		const json2CsvParser = new Parser({fields});
+		const csv = json2CsvParser.parse(cat);
+		const filename = 'notInitComplaints' + Date.now() + '.csv';
+		fs.writeFile(filename, csv, (err) => {
+			if(err) throw err;
+			console.log('Saved!!');
+			res.download(filename);
+		});
+	});
+});
+
+router.get('/generate/xlsx/all', (req, res) => {
+	Complaint.find({}).populate('category').then(cat => {
+		const fields = [
+			{
+				label: 'Id',
+				value: 'id'
+			},
+			{
+				label: 'Title',
+				value: 'title'
+			},
+			{
+				label: 'Date of Creation',
+				value: 'date'
+			},
+			{
+				label: 'Posted by',
+				value: 'user'
+			},
+			{
+				label: 'Deadline',
+				value: 'submitDate'
+			},
+			{
+				label: 'Category',
+				value: 'category.name'
+			},
+			{
+				label: 'Importance',
+				value: 'importance'
+			},
+			{
+				label: 'Status',
+				value: 'status'
+			}
+		];
+		const json2CsvParser = new Parser({fields});
+		const csv = json2CsvParser.parse(cat);
+		const filename = 'allComplaints' + Date.now() + '.csv';
+		fs.writeFile(filename, csv, (err) => {
+			if(err) throw err;
+			console.log('Saved!!');
+			res.download(filename);
 		});
 	});
 });
