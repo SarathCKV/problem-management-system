@@ -1,3 +1,4 @@
+<div style="height: 700px; width: 100%; background-image: url(https://images.shiksha.com/mediadata/images/1552457480php6LZTsx.jpeg); background-size: cover; background-repeat: no-repeat; background-position: center; background-attachment: fixed;">
 <div class="container">
 {{#if success_message}}
     <div class="alert alert-success" role="alert">
@@ -10,7 +11,7 @@
 <br>
 
 {{#if complaint}}
-	<table class="table table-bordered">
+	<table class="table table-bordered" style="background-color: white;">
 		<thead>
 			<th>Title</th>
 			<th>Category</th>
@@ -32,7 +33,7 @@
 					<td>{{room}}, {{floor}}, {{building}}</td>
 					{{!-- <td>{{description}}</td> --}}
 					<td>{{user}}</td>
-					<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
+					<td>{{generateTime date 'MMMM Do YYYY'}}</td>
 					<td>{{submitDate}}</td>
 					<td><a href="/home/complain/{{_id}}"><button class="btn btn-outline-info">View</button></a></td>
 					{{#ifEquality status 'Completed'}}<td><form action="/home/{{_id}}?_method=DELETE" method="post"><button class="btn btn-outline-primary">Satisfied</button></form></td>{{/ifEquality}}
@@ -47,6 +48,7 @@
 {{/if}}
 
 <br>
+</div>
 </div>
 
 

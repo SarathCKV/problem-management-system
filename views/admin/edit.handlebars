@@ -33,7 +33,7 @@
 					<td>{{room}}, {{floor}}, {{building}}</td>
 					<td>{{description}}</td>
 					<td>{{user}}</td>
-					<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
+					<td>{{generateTime date 'MMMM Do YYYY'}}</td>
 					<td><button class="btn btn-outline-dark" type="submit">Change Status</button></td>
 					</form>
 				{{else}}
@@ -41,7 +41,7 @@
 					<td>{{room}}, {{floor}}, {{building}}</td>
 					<td>{{description}}</td>
 					<td>{{user}}</td>
-					<td>{{generateTime date 'MMMM Do YYYY, h:mm:ss a'}}</td>
+					<td>{{generateTime date 'MMMM Do YYYY'}}</td>
 				{{/ifEquality}}
 			</tr>
 			{{/each}}
